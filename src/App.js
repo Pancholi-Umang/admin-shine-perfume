@@ -8,6 +8,8 @@ import Dashboard from './components/Dashboard';
 import Products from './components/Products';
 import Orders from './components/Orders';
 import Account from './components/Account';
+import AllUserData from './components/AllUserData';
+import EditItems from './components/EditItems';
 
 function App () {
   return(
@@ -18,7 +20,9 @@ function App () {
           <Route exact path='/' element={<Dashboard />} />
           <Route exact path='/userorders' element={<Orders />} />
           <Route exact path='/userproducts' element={<Products />} />
-          <Route exact path='/alluseraccounts' element={<Account />} />
+          <Route exact path='/admin-account' element={<Account />} />
+          <Route exact path='/alluseraccounts' element={<AllUserData />} />
+          <Route exact path='/edit-items/:userId' element={<EditItems />} />
         </Routes>
       </div>
     </Router>

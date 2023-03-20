@@ -23,6 +23,10 @@ nav {
   font-size: 22px;
 }
 
+a, .removeLink{
+  text-decoration: none;
+}
+
 .offcanvas-title:hover {
   color: black;
   cursor: pointer;

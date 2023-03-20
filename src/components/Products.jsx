@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   const [data, setData] = useState([]);
@@ -58,8 +59,12 @@ const Products = () => {
             <div className="row">
               {data.map((value) => {
                 const { imag, name, category, price, id } = value;
+                // description
                 return (
-                  <div className="col-lg-4 col-md-6 col-12 mb-4" key={id}>
+                  <div
+                    className="col-xs-12 col-sm-6 col-lg-4 col-xl-3 mb-4"
+                    key={id}
+                  >
                     <div className="card">
                       <div className="bg-image hover-zoom ripple ripple-surface ripple-surface-light">
                         <img src={imag} className="w-100" />
@@ -67,8 +72,8 @@ const Products = () => {
                           <div className="mask">
                             <div className="d-flex justify-content-start align-items-end h-100">
                               <h5>
-                                <button className="badge bg-primary ms-2 border-0">
-                                  Edit 
+                                <button className="border-0">
+                                  <Link className="badge bg-primary ms-2 border-0 removeLink" to={`/edit-items/${id}`}>Edit</Link>
                                 </button>
                               </h5>
                             </div>
@@ -84,12 +89,8 @@ const Products = () => {
                         </a>
                       </div>
                       <div className="card-body">
-                        <a href="" className="text-reset">
-                          <h5 className="card-title mb-3">{name}</h5>
-                        </a>
-                        <a href="" className="text-reset">
-                          <p>{category}</p>
-                        </a>
+                        <h5 className="card-title mb-3">{name}</h5>
+                        <p>{category}</p>
                         <h6 className="mb-3">{price}</h6>
                       </div>
                     </div>

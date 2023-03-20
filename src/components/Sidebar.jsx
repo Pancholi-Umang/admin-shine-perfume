@@ -2,12 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
+  const myFunction = () => {
+    if(window?.getComputedStyle(document.getElementById("myCheck"))?.display !== "none"){
+      document.getElementById("myCheck").click();
+    }
+  }
   return (
     <>
       <nav className="navbar navbar-expand-lg d-block navbar-light">
         <div className="container-fluid">
           <button
             type="button"
+            id="myCheck"
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasExample"
             aria-controls="offcanvasExample"
@@ -36,17 +42,20 @@ const Sidebar = () => {
           ></button>
         </div>
         <div className="offcanvas-body d-flex flex-column align-items-center">
-          <Link className="button-86" to="/" role="button">
+          <Link onClick={myFunction} className="button-86" to="/" role="button">
             <i className="fa-solid fa-chess-board"></i> &nbsp; Dashboard
           </Link>
-          <Link className="button-86" to="/userorders" role="button">
+          <Link onClick={myFunction} className="button-86" to="/userorders" role="button">
             <i className="fa-solid fa-truck"></i> &nbsp; Orders
           </Link>
-          <Link className="button-86" to="/userproducts" role="button">
+          <Link onClick={myFunction} className="button-86" to="/userproducts" role="button">
             <i className="fa-solid fa-bag-shopping"></i> &nbsp; Products
           </Link>
-          <Link className="button-86" to="/alluseraccounts" role="button">
+          <Link onClick={myFunction} className="button-86" to="/admin-account" role="button">
             <i className="fa-solid fa-user"></i> &nbsp; My accounts
+          </Link>
+          <Link onClick={myFunction} className="button-86" to="/alluseraccounts" role="button">
+            <i className="fa-solid fa-address-book"></i> &nbsp; User accounts
           </Link>
         </div>
       </div>
