@@ -23,9 +23,19 @@ const Products = () => {
     });
   }, []);
 
+  var DATAarr = [];
+  for (let key in data) {
+    DATAarr.push(Object.assign(data[key], { id: key }));
+  }
+
+  var ITEMSarr = [];
+  for (let key in Items) {
+    ITEMSarr.push(Object.assign(Items[key], { id: key }));
+  }
+
   const changeHandler = (e) => {
     var search = e.target.value;
-    const myFilter = Items.filter((es) => {
+    const myFilter = ITEMSarr.filter((es) => {
       return es.name.toLowerCase().includes(search.toLowerCase());
     });
     setData(myFilter);
@@ -57,7 +67,7 @@ const Products = () => {
               <strong>All Products</strong>
             </h4>
             <div className="row">
-              {data.map((value) => {
+              {DATAarr.map((value) => {
                 const { imag, name, category, price, id } = value;
                 // description
                 return (
@@ -68,7 +78,7 @@ const Products = () => {
                     <div className="card">
                       <div className="bg-image hover-zoom ripple ripple-surface ripple-surface-light">
                         <img src={imag} className="w-100" />
-                        <a href="#!">
+                        <div>
                           <div className="mask">
                             <div className="d-flex justify-content-start align-items-end h-100">
                               <h5>
@@ -86,7 +96,7 @@ const Products = () => {
                               }}
                             ></div>
                           </div>
-                        </a>
+                        </div>
                       </div>
                       <div className="card-body">
                         <h5 className="card-title mb-3">{name}</h5>

@@ -57,6 +57,9 @@ const Sidebar = () => {
           <Link onClick={myFunction} className="button-86" to="/alluseraccounts" role="button">
             <i className="fa-solid fa-address-book"></i> &nbsp; User accounts
           </Link>
+          <Link onClick={myFunction} className="button-86" to="/add-product" role="button">
+            <i className="fa-solid fa-add"></i> &nbsp; Add Products
+          </Link>
         </div>
       </div>
     </>
