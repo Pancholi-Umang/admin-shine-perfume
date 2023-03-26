@@ -1,84 +1,74 @@
-import React, { useState,useEffect } from "react";
 import axios from "axios";
+import React, { useState, useEffect } from "react";
 
 const Orders = () => {
-  const [image, setImage] = useState(null);
-  const [data, setData] = useState([])
+  const [Items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const onImageChange = (event) => {
-    let files = event.target.files;
-    let reader = new FileReader();
-    reader.readAsDataURL(files[0]);
-
-    reader.onload = (e) => {
-        setImage(e.target.result);
-    }
-  };
-
-  const ClickToPatchData = () => {
-    const formData = {image};
-    const url = `https://imagedemo-6e486-default-rtdb.firebaseio.com/items/0.json`;
-    axios.patch(url, {
-      imag:formData.image
-    })
-    console.log(formData.image)
-  }
-  
   useEffect(() => {
-    const url = `https://imagedemo-6e486-default-rtdb.firebaseio.com/items/0.json`;
-    axios.get(url).then((response) => {
-      setData(response.data);
-    });
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
   }, []);
 
+  const baseURL =
+    "https://perfumeweb-60a0e-default-rtdb.firebaseio.com/invoice.json/";
+  const GetData = () => {
+    axios.get(baseURL).then((response) => {
+      setItems(response.data);
+    });
+  };
+
+  useEffect(() => {
+    GetData();
+  }, [loading]);
+
+  var ITEMSarr = [];
+  for (let key in Items) {
+    ITEMSarr.push(Object.assign(Items[key], { id: key }));
+  }
+
   return (
-    <div>
-      <input type="file" onChange={onImageChange} className="filetype" />
-      <button onClick={ClickToPatchData}> Upload Data </button>
-
-
-      <div className="col-md-12 team-boxed">
-      <div className="row people d-flex justify-content-center align-items-center">
-        <div className="col-md-6 col-lg-4 item">
-          <div className="box position-relative">
-            <img className="rounded-circle" src={data.imag} />
-            <h3 className="name">{data.name}</h3>
-            <p className="title">{data.category}</p>
-            <p className="description">{data.description}</p>
-            <div className="social">
-              <button type="button" className="btn btn-light positionButton">
-                Edit
-              </button>
-            </div>
-          </div>
+    <div className="container-fluid">
+      {loading ? (
+        <div className="containes">
+          <div className="item1-1"></div>
+          <div className="item2-2"></div>
+          <div className="item3-3"></div>
+          <div className="item4-4"></div>
+          <div className="item5-5"></div>
         </div>
-
-        <div className="col-md-6">
-          <form className="col-md-8">
-            <div className="form-outline mb-4">
-              <input type="text" id="form4Example1" className="form-control" />
-            </div>
-
-            <div className="form-outline mb-4">
-              <input type="email" id="form4Example2" className="form-control" />
-            </div>
-
-            <div className="form-outline mb-4">
-              <textarea
-                className="form-control"
-                id="form4Example3"
-                rows="2"
-              ></textarea>
-            </div>
-
-            <button type="submit" className="btn btn-primary btn-block mb-4">
-              Send
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-
+      ) : (
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">name</th>
+              <th scope="col">Product</th>
+              <th scope="col">city</th>
+              <th scope="col">State</th>
+              <th scope="col">Address</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ITEMSarr.map((values, index) => {
+              return (
+                <tr key={index}>
+                  <td>{index+1}</td>
+                  <td>{values.CardOnName.toUpperCase()}</td>
+                  <td>{values.productname.toUpperCase()}</td>
+                  <td>{values.City}</td>
+                  <td>{values.State}</td>
+                  <td>{values.Address}</td>
+                  <td>{values.Total}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };

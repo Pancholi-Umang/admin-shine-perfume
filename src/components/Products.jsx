@@ -14,24 +14,30 @@ const Products = () => {
     }, 1000);
   }, []);
 
-  const baseURL =
-    "https://shine-perfumes-default-rtdb.firebaseio.com/items.json/";
-  useEffect(() => {
+  const getData = () => {
+    const baseURL = "https://shine-perfumes-default-rtdb.firebaseio.com/items.json/"
     axios.get(baseURL).then((response) => {
       setData(response.data);
       setItems(response.data);
     });
+  }
+  useEffect(() => {
+    getData();
   }, []);
 
   var DATAarr = [];
   for (let key in data) {
-    DATAarr.push(Object.assign(data[key], { id: key }));
+    console.log("key");
+    if(key){
+      DATAarr.push(Object?.assign(data[key], {id: key }));
+    }
   }
+console.log(DATAarr,"da");
 
   var ITEMSarr = [];
   for (let key in Items) {
-    ITEMSarr.push(Object.assign(Items[key], { id: key }));
-  }
+      ITEMSarr.push(Object.assign(Items[key], { id: key }));
+    }
 
   const changeHandler = (e) => {
     var search = e.target.value;
@@ -40,6 +46,17 @@ const Products = () => {
     });
     setData(myFilter);
   };
+
+
+  const DeleteProduct = (id) => {
+    const DeleteCardData = axios.delete(
+      `https://shine-perfumes-default-rtdb.firebaseio.com/items/${id}.json`
+    );
+    DeleteCardData?.then(() => {
+      getData();
+    });
+
+  }
 
   // id auto add karavvani chhe product length-1
   return (
@@ -81,10 +98,11 @@ const Products = () => {
                         <div>
                           <div className="mask">
                             <div className="d-flex justify-content-start align-items-end h-100">
-                              <h5>
+                              <h5 className="mt-1">
                                 <button className="border-0">
                                   <Link className="badge bg-primary ms-2 border-0 removeLink" to={`/edit-items/${id}`}>Edit</Link>
                                 </button>
+                                <button className="border-0 bg-danger badge" onClick={()=>DeleteProduct(id)}>Delete</button>
                               </h5>
                             </div>
                           </div>

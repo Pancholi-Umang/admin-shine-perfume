@@ -5,23 +5,23 @@ class PieRechartComponent extends React.Component {
    pieData = [
       {
          name: "perfume",
-         value: 54.85
+         value: 40
       },
       {
          name: "deodrant",
-         value: 47.91
+         value: 25
       },
       {
          name: "fragrance-oil",
-         value: 16.85
+         value: 20
       },
       {
          name: "fruity-fragrance-oil",
-         value: 16.14
+         value: 7
       },
       {
          name: "fragrance-gift-set",
-         value: 10.25
+         value: 8
       }
    ];
    CustomTooltip = ({ active, payload }) => {
