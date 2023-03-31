@@ -48,6 +48,28 @@ const Dashboard = () => {
   }
 
 
+
+  const [userDetails, setUserDetails] = useState([])
+  
+  const getData = () => {
+    const baseURL = "https://imagedemo-6e486-default-rtdb.firebaseio.com/wish.json";
+    axios.get(baseURL).then((response) => {
+      setUserDetails(response.data)
+    })
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  var userDataArray = [];
+  for (let key in userDetails) {
+    if (key) {
+      userDataArray.push(Object?.assign(userDetails[key], { id: key }));
+    }
+  }
+
+
   return (
     <div className="col-md-10  mx-auto mt-5">
       { loading ? (
@@ -111,7 +133,7 @@ const Dashboard = () => {
                   </div>
                   <div className="row align-items-center mb-2 d-flex">
                     <div className="col-8">
-                      <h2 className="d-flex align-items-center mb-0">2</h2>
+                      <h2 className="d-flex align-items-center mb-0">{userDataArray.length}</h2>
                     </div>
                     <div className="col-4 text-right">
                       <span>

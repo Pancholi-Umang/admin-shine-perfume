@@ -17,13 +17,12 @@ const Orders = () => {
     }, 1500);
   }, []);
 
-  const baseURL =
-    "https://perfumeweb-60a0e-default-rtdb.firebaseio.com/invoice.json/";
+  const baseURL = "https://perfumeweb-60a0e-default-rtdb.firebaseio.com/invoice.json/";
   const GetData = () => {
-    axios.get(baseURL).then((response) => {
-      setItems(response.data);
-      setFilterItems(response.data);
-    });
+    axios.get(baseURL).then(response => {
+      setItems(response.data); 
+      setFilterItems(response.data)
+    })
   };
 
   useEffect(() => {
@@ -50,23 +49,7 @@ const Orders = () => {
     setStartDate(startDate);
     setEndDate(endDate);
     setItems(filtered);
-    console.log(filtered, "",ITEMSarr);
   };
-
-  // const handleSelectDate = () => {
-  //   let filtered = productDateArray.filter((product)=> {
-  //   let productDate = new Date(product.Date);
-  //   console.log(productDate)
-  //    return(
-  //     productDate >= startDate && product.Date <= endDate
-  //    )
-  //   });
-  //   setStartDate(startDate);
-  //   setEndDate(endDate);
-  //   setItems(filtered);
-  //   console.log(filtered);
-  //   startDate()
-  // }
 
   return (
     <div className="container-fluid ">
