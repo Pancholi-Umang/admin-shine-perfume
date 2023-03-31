@@ -100,22 +100,22 @@ const Account = () => {
                         <p className="mb-0">https://shineperfume.com</p>
                       </li>
                       <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                        <i className="fab fa-github fa-lg"></i>{" "}
+                        <i className="fab fa-github fa-lg"></i>
                         {/* style="color: #333333;" */}
                         <p className="mb-0">shine perfume</p>
                       </li>
                       <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                        <i className="fab fa-twitter fa-lg"></i>{" "}
+                        <i className="fab fa-twitter fa-lg"></i>
                         {/*style="color: #55acee;"*/}
                         <p className="mb-0">shine perfume</p>
                       </li>
                       <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                        <i className="fab fa-instagram fa-lg"></i>{" "}
+                        <i className="fab fa-instagram fa-lg"></i>
                         {/*style="color: #ac2bac;"*/}
                         <p className="mb-0">shine perfume</p>
                       </li>
                       <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                        <i className="fab fa-facebook-f fa-lg"></i>{" "}
+                        <i className="fab fa-facebook-f fa-lg"></i>
                         {/*style="color: #3b5998;"*/}
                         <p className="mb-0">shine perfume</p>
                       </li>

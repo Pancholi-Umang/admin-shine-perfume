@@ -2,16 +2,10 @@ import React from "react";
 import Table from "react-bootstrap/Table";
 
 export default function AllUserData() {
+
+
   return (
     <div className="mt-5">
-      {/* <div className="col-md-12 mt-4 mb-4">
-        <label className="toggle-mode">
-          <input className="toggle-checkbox" type="checkbox" />
-          <div className="toggle-switch"></div>
-          <span className="toggle-label"></span>
-        </label>
-      </div> */}
-
       <h4 className="mb-3">All Registerd User's Details:-</h4>
 
       <Table stripped bordered hover size="sm">
@@ -25,6 +19,7 @@ export default function AllUserData() {
           </tr>
         </thead>
         <tbody>
+          
           <tr>
             <td>Umang</td>
             <td>Pancholi</td>

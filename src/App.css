@@ -260,3 +260,7 @@ a, .removeLink{
   transition: 0.5s all ease;
   transform: scale(1);
 }
+
+.heightInherit{
+  height: inherit;
+}

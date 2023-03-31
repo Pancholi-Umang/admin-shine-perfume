@@ -47,21 +47,6 @@ const Dashboard = () => {
     DATAarr.push(Object.assign(data[key], { id: key }));
   }
 
-  // const URL = "https://shine-perfumes-default-rtdb.firebaseio.com/items.json/";
-  // const Datas = () => {
-  //   axios.get(URL).then((response) => {
-  //     setData(response.data);
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   Datas();
-  // }, [loading]);
-
-  // var DATAarr = [];
-  // for (let key in data) {
-  //   DATAarr.push(Object.assign(data[key], { id: key }));
-  // }
 
   return (
     <div className="col-md-10  mx-auto mt-5">
