@@ -15,7 +15,7 @@ const Products = () => {
   }, []);
 
   const getData = () => {
-    const baseURL = "https://shine-perfumes-default-rtdb.firebaseio.com/items.json/"
+    const baseURL = "https://listofallperfumes-default-rtdb.firebaseio.com/items.json/"
     axios.get(baseURL).then((response) => {
       setData(response.data);
       setItems(response.data);
@@ -50,7 +50,7 @@ console.log(DATAarr,"da");
 
   const DeleteProduct = (id) => {
     const DeleteCardData = axios.delete(
-      `https://shine-perfumes-default-rtdb.firebaseio.com/items/${id}.json`
+      `https://listofallperfumes-default-rtdb.firebaseio.com/items/${id}.json`
     );
     DeleteCardData?.then(() => {
       getData();

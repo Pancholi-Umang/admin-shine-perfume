@@ -14,7 +14,7 @@ const EditItems = () => {
   });
   const navigate = useNavigate();
   const { userId } = useParams();
-  const baseURL = `https://shine-perfumes-default-rtdb.firebaseio.com/items/${userId}.json`;
+  const baseURL = `https://listofallperfumes-default-rtdb.firebaseio.com/items/${userId}.json`;
   useEffect(() => {
     axios.get(baseURL).then((response) => {
       setData(response.data);
@@ -24,7 +24,7 @@ const EditItems = () => {
   const getdataToInputField = () => {
     axios
       .get(
-        `https://shine-perfumes-default-rtdb.firebaseio.com/items/${userId}.json`
+        `https://listofallperfumes-default-rtdb.firebaseio.com/items/${userId}.json`
       )
       .then((response) => {
         setInputValue(response.data);
@@ -32,7 +32,7 @@ const EditItems = () => {
   };
 
   const onSubmitPatchRequest = () => {
-    const url = `https://shine-perfumes-default-rtdb.firebaseio.com/items/${userId}.json`;
+    const url = `https://listofallperfumes-default-rtdb.firebaseio.com/items/${userId}.json`;
 
     axios.patch(url, {
       name: inputValue.name,

@@ -29,7 +29,7 @@ const AddNewProduct = () => {
       const formData = { image };
       axios({
         method: "post",
-        url: `https://shine-perfumes-default-rtdb.firebaseio.com/items.json`,
+        url: `https://listofallperfumes-default-rtdb.firebaseio.com/items.json`,
         data: { id: Number(inputData.id), name: inputData.name, price: Number(inputData.price), category: inputData.category, status: inputData.status, is_wishlist: inputData.is_wishlist, quantity: inputData.quantity, description: inputData.description, imag: formData.image,
         },
       });

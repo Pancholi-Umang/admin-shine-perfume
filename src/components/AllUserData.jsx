@@ -6,7 +6,7 @@ export default function AllUserData() {
   const [userDetails, setUserDetails] = useState([])
   
   const getData = () => {
-    const baseURL = "https://imagedemo-6e486-default-rtdb.firebaseio.com/wish.json";
+    const baseURL = "https://registration-login-23503-default-rtdb.firebaseio.com/login.json";
     axios.get(baseURL).then((response) => {
       setUserDetails(response.data)
     })

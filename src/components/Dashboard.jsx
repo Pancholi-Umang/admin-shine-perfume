@@ -15,7 +15,7 @@ const Dashboard = () => {
   }, []);
 
   const baseURL =
-    "https://perfumeweb-60a0e-default-rtdb.firebaseio.com/invoice.json/";
+    "https://order-invoice-c8bed-default-rtdb.firebaseio.com/invoice.json/";
   const GetData = () => {
     axios.get(baseURL).then((response) => {
       setItems(response.data);
@@ -31,7 +31,7 @@ const Dashboard = () => {
     ITEMSarr.push(Object.assign(Items[key], { id: key }));
   }
 
-  const URL = "https://shine-perfumes-default-rtdb.firebaseio.com/items.json/";
+  const URL = "https://listofallperfumes-default-rtdb.firebaseio.com/items.json/";
   const Datas = () => {
     axios.get(URL).then((response) => {
       setData(response.data);
@@ -52,7 +52,7 @@ const Dashboard = () => {
   const [userDetails, setUserDetails] = useState([])
   
   const getData = () => {
-    const baseURL = "https://imagedemo-6e486-default-rtdb.firebaseio.com/wish.json";
+    const baseURL = "https://registration-login-23503-default-rtdb.firebaseio.com/login.json";
     axios.get(baseURL).then((response) => {
       setUserDetails(response.data)
     })
@@ -133,7 +133,7 @@ const Dashboard = () => {
                   </div>
                   <div className="row align-items-center mb-2 d-flex">
                     <div className="col-8">
-                      <h2 className="d-flex align-items-center mb-0">{userDataArray.length}</h2>
+                      <h2 className="d-flex align-items-center mb-0">{userDataArray.length  }</h2>
                     </div>
                     <div className="col-4 text-right">
                       <span>
