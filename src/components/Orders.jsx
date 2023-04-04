@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import '../App.css'
 
 const Orders = () => {
   const [Items, setItems] = useState([]);
@@ -10,6 +11,7 @@ const Orders = () => {
   const [startDate, setStartDate] = useState(new Date("2023/03/29")); //03/29/2023
   const [endDate, setEndDate] = useState(new Date());
   const [toggle, setToggle] = useState(false);
+  const [dropdownname, setDropdownName] = useState("All")
 
   useEffect(() => {
     setLoading(true);
@@ -18,12 +20,13 @@ const Orders = () => {
     }, 1500);
   }, []);
 
-  const baseURL = "https://order-invoice-c8bed-default-rtdb.firebaseio.com/invoice.json/";
+  const baseURL =
+    "https://order-invoice-c8bed-default-rtdb.firebaseio.com/invoice.json/";
   const GetData = () => {
-    axios.get(baseURL).then(response => {
-      setItems(response.data); 
-      setFilterItems(response.data)
-    })
+    axios.get(baseURL).then((response) => {
+      setItems(response.data);
+      setFilterItems(response.data);
+    });
   };
 
   useEffect(() => {
@@ -43,8 +46,8 @@ const Orders = () => {
   const handleSelectDate = () => {
     let filtered = productDateArray.filter((product) => {
       return (
-          product.Date >= startDate.getDate() + "/" + (startDate.getMonth() + 1) + "/" + startDate.getFullYear() && 
-          product.Date <= endDate.getDate() + "/" + (endDate.getMonth() + 1) + "/" + endDate.getFullYear()
+        product.Date >= startDate.getDate() + "/" + (startDate.getMonth() + 1) + "/" + startDate.getFullYear() &&
+        product.Date <= endDate.getDate() +  "/" +  (endDate.getMonth() + 1) +  "/" +  endDate.getFullYear()
       );
     });
     setStartDate(startDate);
@@ -52,34 +55,75 @@ const Orders = () => {
     setItems(filtered);
   };
 
-  const ChangeDispatchStatus = async (id,deliveryStatus) => {
-    console.log(id,"",deliveryStatus)
-    if(deliveryStatus == "proceed"){
-      const updatedOrders = await axios.patch(`https://order-invoice-c8bed-default-rtdb.firebaseio.com/invoice/${id}.json/`, {
-        deliveryStatus: "In Process", 
+  const DeliveryUniq = ["proceed", "In Process", "Dispatch"];
+
+  const handleClick = (deliveryInfo) => {
+    console.log(deliveryInfo)
+    if(deliveryInfo){
+      setDropdownName(deliveryInfo);
+      const result = productDateArray.filter((val) => {
+        return val.deliveryStatus === deliveryInfo;
       });
+      setItems(result);
+    }
+    else{
+      setItems(productDateArray)
+    }
+  }
+
+  const ChangeDispatchStatus = async (id, deliveryStatus) => {
+    console.log(id, "", deliveryStatus);
+    if (deliveryStatus == "proceed") {
+      const updatedOrders = await axios.patch(
+        `https://order-invoice-c8bed-default-rtdb.firebaseio.com/invoice/${id}.json/`,
+        {
+          deliveryStatus: "In Process",
+        }
+      );
       setToggle(!toggle);
       setItems(updatedOrders.data);
-    }
-    else if(deliveryStatus == "In Process"){
-      console.log(deliveryStatus)
-      const dispatchOrder = await axios.patch(`https://order-invoice-c8bed-default-rtdb.firebaseio.com/invoice/${id}.json/`, {
-        deliveryStatus: "Dispatch",   
-      });
+    } else if (deliveryStatus == "In Process") {
+      console.log(deliveryStatus);
+      const dispatchOrder = await axios.patch(
+        `https://order-invoice-c8bed-default-rtdb.firebaseio.com/invoice/${id}.json/`,
+        {
+          deliveryStatus: "Dispatch",
+        }
+      );
       setToggle(!toggle);
       setItems(dispatchOrder.data);
     }
   };
 
-
   return (
     <div className="container-fluid ">
       <div className="row my-2 d-flex align-items-end bg-secondary py-2 container mx-auto">
-        <div className="col-md-3"></div>
         <div className="col-md-3">
-          <span className="col-md-6">Start date:</span>
+        <div className="dropdown d-flex align-items-center justify-content-center">
+          <button className="btn-sm btn-secondary dropdown-toggle col-md-10 border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {dropdownname.toUpperCase()}
+          </button>
+          <ul className="dropdown-menu">
+          {DeliveryUniq.map((getVal, index) => {
+            
+              return (
+                <button
+                  key={index}
+                  className="dropdown-item"
+                  onClick={() => handleClick(getVal)}>
+                  {getVal.toUpperCase()}
+                </button>
+              );
+             })
+            }
+            
+          </ul>
+        </div>
+        </div>
+        <div className="col-md-3 d-flex justify-content-around align-items-center ">
+          <span className="col-md-4">Start date:</span>
           <DatePicker
-            className="col-md-6"
+            className="col-md-8 bg-transparent border-0"
             selected={startDate}
             onChange={(date) => setStartDate(date)}
             selectsStart
@@ -87,10 +131,10 @@ const Orders = () => {
             endDate={endDate}
           />
         </div>
-        <div className="col-md-3">
-          <span className="col-md-6">End date:</span>
+        <div className="col-md-3 d-flex justify-content-around align-items-center ">
+          <span className="col-md-4">End date:</span>
           <DatePicker
-            className="col-md-6"
+            className="col-md-8 bg-transparent border-0"
             selected={endDate}
             onChange={(date) => setEndDate(date)}
             selectsEnd
@@ -102,13 +146,13 @@ const Orders = () => {
         <div className=" h-100 col-md-3 d-flex">
           <button
             onClick={handleSelectDate}
-            className="btn-sm col-md-4 btn-primary align-self-start"
+            className="btn-sm col-md-4 button-12"
           >
             Filter Data
           </button>
         </div>
       </div>
-      { loading ? (
+      {loading ? (
         <div className="containes">
           <div className="item1-1"></div>
           <div className="item2-2"></div>
@@ -133,7 +177,7 @@ const Orders = () => {
           </thead>
           <tbody>
             {ITEMSarr.map((values, index) => {
-              const {id, Date, CardOnName, productname, City, State, Address, Total, deliveryStatus} = values;
+              const { id, Date, CardOnName, productname, City, State, Address, Total, deliveryStatus} = values;
               return (
                 <tr key={index}>
                   <td>{index + 1}</td>
@@ -143,7 +187,14 @@ const Orders = () => {
                   <td>{City?.toUpperCase()}</td>
                   <td>{State?.toUpperCase()}</td>
                   <td>{Address}</td>
-                  <td><button className="btn btn-primary" onClick={()=>ChangeDispatchStatus(id,deliveryStatus)}>{deliveryStatus}</button></td>
+                  <td>
+                    <button
+                      className="button-70"
+                      onClick={() => ChangeDispatchStatus(id, deliveryStatus)}
+                    >
+                      {deliveryStatus}
+                    </button>
+                  </td>
                   <td>{Total}</td>
                 </tr>
               );

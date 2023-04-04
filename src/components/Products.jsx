@@ -21,18 +21,17 @@ const Products = () => {
       setItems(response.data);
     });
   }
+  
   useEffect(() => {
     getData();
   }, []);
 
   var DATAarr = [];
   for (let key in data) {
-    console.log("key");
     if(key){
       DATAarr.push(Object?.assign(data[key], {id: key }));
     }
   }
-console.log(DATAarr,"da");
 
   var ITEMSarr = [];
   for (let key in Items) {
