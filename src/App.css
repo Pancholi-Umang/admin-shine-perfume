@@ -23,7 +23,8 @@ nav {
   font-size: 22px;
 }
 
-a, .removeLink{
+a,
+.removeLink {
   text-decoration: none;
 }
 
@@ -65,10 +66,9 @@ a, .removeLink{
   color: white;
 }
 
-.card{
-    background-color: whitesmoke;
-}   
-
+.card {
+  background-color: whitesmoke;
+}
 
 /* loaders */
 
@@ -97,15 +97,16 @@ a, .removeLink{
     transform: scale(1);
   }
   50%,
-    75% {
+  75% {
     transform: scale(2.5);
   }
-  78%, 100% {
+  78%,
+  100% {
     opacity: 0;
   }
 }
 .item1-1:before {
-  content: '';
+  content: "";
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -133,15 +134,16 @@ a, .removeLink{
     transform: scale(1);
   }
   50%,
-    75% {
+  75% {
     transform: scale(2.5);
   }
-  78%, 100% {
+  78%,
+  100% {
     opacity: 0;
   }
 }
 .item2-2:before {
-  content: '';
+  content: "";
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -169,15 +171,16 @@ a, .removeLink{
     transform: scale(1);
   }
   50%,
-    75% {
+  75% {
     transform: scale(2.5);
   }
-  78%, 100% {
+  78%,
+  100% {
     opacity: 0;
   }
 }
 .item3-3:before {
-  content: '';
+  content: "";
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -205,15 +208,16 @@ a, .removeLink{
     transform: scale(1);
   }
   50%,
-    75% {
+  75% {
     transform: scale(2.5);
   }
-  78%, 100% {
+  78%,
+  100% {
     opacity: 0;
   }
 }
 .item4-4:before {
-  content: '';
+  content: "";
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -241,15 +245,16 @@ a, .removeLink{
     transform: scale(1);
   }
   50%,
-    75% {
+  75% {
     transform: scale(2.5);
   }
-  78%, 100% {
+  78%,
+  100% {
     opacity: 0;
   }
 }
 .item5-5:before {
-  content: '';
+  content: "";
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -261,22 +266,20 @@ a, .removeLink{
   transform: scale(1);
 }
 
-.heightInherit{
+.heightInherit {
   height: inherit;
 }
-
-
 
 .button-70 {
   background-image: linear-gradient(#0dccea, #0d70ea);
   border: 0;
   border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, .3) 0 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 5px 15px;
   box-sizing: border-box;
   color: #fff;
   cursor: pointer;
-  font-family: Montserrat,sans-serif;
-  font-size: .9em;
+  font-family: Montserrat, sans-serif;
+  font-size: 0.9em;
   margin: 5px;
   padding: 5px 15px;
   text-align: center;
@@ -285,25 +288,27 @@ a, .removeLink{
   touch-action: manipulation;
 }
 
-
 .button-12 {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 6px 14px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;
   border-radius: 6px;
   border: none;
 
-  background: #6E6D70;
-  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), inset 0px 0.5px 0.5px rgba(255, 255, 255, 0.5), 0px 0px 0px 0.5px rgba(0, 0, 0, 0.12);
-  color: #DFDEDF;
+  background: #6e6d70;
+  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1),
+    inset 0px 0.5px 0.5px rgba(255, 255, 255, 0.5),
+    0px 0px 0px 0.5px rgba(0, 0, 0, 0.12);
+  color: #dfdedf;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
 }
 
 .button-12:focus {
-  box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+  box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2),
+    0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
   outline: 0;
 }

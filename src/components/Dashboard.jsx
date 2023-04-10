@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import PieRechartComponent from "./PieChart";
+import { useDispatch, useSelector } from "react-redux";
+import { getProduct, getAllOrder, getAllRegistration } from "../Redux/action";
 
 const Dashboard = () => {
-  const [Items, setItems] = useState([]);
-  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setLoading(true);
@@ -14,65 +15,42 @@ const Dashboard = () => {
     }, 1500);
   }, []);
 
-  const baseURL =
-    "https://order-invoice-c8bed-default-rtdb.firebaseio.com/invoice.json/";
-  const GetData = () => {
-    axios.get(baseURL).then((response) => {
-      setItems(response.data);
-    });
-  };
+  const getAllProduct = useSelector((state) => state.item.products);
+  const getAllorders = useSelector((state)=>state.order.orders)
+  const getAllUsers = useSelector((state)=>state.login.registrations)
 
-  useEffect(() => {
-    GetData();
-  }, [loading]);
+   useEffect(() => {
+    if(getAllProduct.length === 0){
+      dispatch(getProduct());
+      dispatch(getAllOrder());
+      dispatch(getAllRegistration());
+    }
+  }, [getAllProduct,getAllorders]);
 
-  var ITEMSarr = [];
-  for (let key in Items) {
-    ITEMSarr.push(Object.assign(Items[key], { id: key }));
-  }
-
-  const URL = "https://listofallperfumes-default-rtdb.firebaseio.com/items.json/";
-  const Datas = () => {
-    axios.get(URL).then((response) => {
-      setData(response.data);
-    });
-  };
-
-  useEffect(() => {
-    Datas();
-  }, [loading]);
-
-  var DATAarr = [];
-  for (let key in data) {
-    DATAarr.push(Object.assign(data[key], { id: key }));
-  }
-
-
-
-  const [userDetails, setUserDetails] = useState([])
-  
-  const getData = () => {
-    const baseURL = "https://registration-login-23503-default-rtdb.firebaseio.com/login.json";
-    axios.get(baseURL).then((response) => {
-      setUserDetails(response.data)
-    })
-  }
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  var userDataArray = [];
-  for (let key in userDetails) {
+  var ALLproductGET = [];
+  for (let key in getAllProduct) {
     if (key) {
-      userDataArray.push(Object?.assign(userDetails[key], { id: key }));
+      ALLproductGET.push(Object?.assign(getAllProduct[key], { id: key }));
     }
   }
 
+  var AllOrderAchieve = [];
+  for (let key in getAllorders) {
+    if (key) {
+      AllOrderAchieve.push(Object?.assign(getAllorders[key], { id: key }));
+    }
+  }  
 
+  var ALLUSERS = [];
+  for (let key in getAllUsers) {
+    if (key) {
+    ALLUSERS.push(Object.assign(getAllUsers[key], { id: key }))
+    }
+  }
+  
   return (
     <div className="col-md-10  mx-auto mt-5">
-      { loading ? (
+      {loading ? (
         <div className="containes">
           <div className="item1-1"></div>
           <div className="item2-2"></div>
@@ -95,7 +73,7 @@ const Dashboard = () => {
                   <div className="row align-items-center mb-2 d-flex">
                     <div className="col-8">
                       <h2 className="d-flex align-items-center mb-0">
-                        {ITEMSarr.length}
+                        {AllOrderAchieve.length}
                       </h2>
                     </div>
                     <div className="col-4 text-right">
@@ -133,7 +111,9 @@ const Dashboard = () => {
                   </div>
                   <div className="row align-items-center mb-2 d-flex">
                     <div className="col-8">
-                      <h2 className="d-flex align-items-center mb-0">{userDataArray.length  }</h2>
+                      <h2 className="d-flex align-items-center mb-0">
+                        {ALLUSERS.length}
+                      </h2>
                     </div>
                     <div className="col-4 text-right">
                       <span>
@@ -171,7 +151,7 @@ const Dashboard = () => {
                   <div className="row align-items-center mb-2 d-flex">
                     <div className="col-8">
                       <h2 className="d-flex align-items-center mb-0">
-                        {DATAarr.length}
+                        {ALLproductGET.length}
                       </h2>
                     </div>
                     <div className="col-4 text-right">

@@ -1,25 +1,22 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllRegistration } from "../Redux/action";
 
 export default function AllUserData() {
 
-  const [userDetails, setUserDetails] = useState([])
-  
-  const getData = () => {
-    const baseURL = "https://registration-login-23503-default-rtdb.firebaseio.com/login.json";
-    axios.get(baseURL).then((response) => {
-      setUserDetails(response.data)
-    })
-  }
+  const dispatch = useDispatch();
+  const getAllUsers = useSelector((state)=>state.login.registrations)
 
-  useEffect(() => {
-    getData();
-  }, []);
+  useEffect(()=>{
+    dispatch(getAllRegistration())
+  },[getAllUsers])
+
+
 
   var userDataArray = [];
-  for (let key in userDetails) {
+  for (let key in getAllUsers) {
     if (key) {
-      userDataArray.push(Object?.assign(userDetails[key], { id: key }));
+      userDataArray.push(Object?.assign(getAllUsers[key], { id: key }));
     }
   }
 
@@ -39,19 +36,17 @@ export default function AllUserData() {
             </tr>
           </thead>
           <tbody>
-            {
-              userDataArray.map((val,index)=>{
-                return(
-                  <tr key={index}>
-                    <th scope="row">{index+1}</th>
-                    <td>{val?.firstName}</td>
-                    <td>{val?.lastName}</td>
-                    <td>{val?.email}</td>
-                    <td>{val?.password}</td>
-                  </tr>
-                )
-              })
-            }
+            {userDataArray.map((val, index) => {
+              return (
+                <tr key={index}>
+                  <th scope="row">{index + 1}</th>
+                  <td>{val?.firstName}</td>
+                  <td>{val?.lastName}</td>
+                  <td>{val?.email}</td>
+                  <td>{val?.password}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

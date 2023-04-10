@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { getProduct, searchProduct, fetchSingleRecord, deleteRecord } from "../Redux/action";
+import { useDispatch, useSelector } from "react-redux";
 
 const Products = () => {
-  const [data, setData] = useState([]);
-  const [Items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -14,50 +14,50 @@ const Products = () => {
     }, 1000);
   }, []);
 
-  const getData = () => {
-    const baseURL = "https://listofallperfumes-default-rtdb.firebaseio.com/items.json/"
-    axios.get(baseURL).then((response) => {
-      setData(response.data);
-      setItems(response.data);
-    });
-  }
-  
-  useEffect(() => {
-    getData();
-  }, []);
+  const getAllProduct = useSelector((state) => state.item.products);
+  const productSearchItem = useSelector((state) => state.item.search);
 
-  var DATAarr = [];
-  for (let key in data) {
-    if(key){
-      DATAarr.push(Object?.assign(data[key], {id: key }));
+  var SEARCH_ARR = [];
+  for (let key in productSearchItem) {
+    if (key) {
+      SEARCH_ARR.push(Object?.assign(productSearchItem[key], { id: key }));
     }
   }
 
   var ITEMSarr = [];
-  for (let key in Items) {
-      ITEMSarr.push(Object.assign(Items[key], { id: key }));
-    }
+  for (let key in getAllProduct) {
+    ITEMSarr.push(Object.assign(getAllProduct[key], { id: key }));
+  }
 
   const changeHandler = (e) => {
     var search = e.target.value;
     const myFilter = ITEMSarr.filter((es) => {
       return es.name.toLowerCase().includes(search.toLowerCase());
     });
-    setData(myFilter);
+    dispatch(searchProduct(myFilter));
   };
 
-
   const DeleteProduct = (id) => {
-    const DeleteCardData = axios.delete(
-      `https://listofallperfumes-default-rtdb.firebaseio.com/items/${id}.json`
-    );
-    DeleteCardData?.then(() => {
-      getData();
-    });
+        const filteredData = ITEMSarr.filter((item) => item.id !== id);
+        dispatch(deleteRecord(filteredData,id)) 
+  };
 
-  }
+  const navigate = useNavigate();
 
-  // id auto add karavvani chhe product length-1
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // all product ne atla mate call kari chhe km k getProduct() thi badhi product male chhe
+    if (ITEMSarr.length === 0) {
+      dispatch(getProduct());
+    }
+    dispatch(searchProduct(ITEMSarr));
+  }, [getAllProduct]);
+
+  const getEditToClick = (id) => {
+    dispatch(fetchSingleRecord(id));
+    navigate(`/edit-items/${id}`);
+  };
+
   return (
     <div className="container-fluid">
       <div className="col-md-10 container px-1 mt-2">
@@ -83,9 +83,8 @@ const Products = () => {
               <strong>All Products</strong>
             </h4>
             <div className="row">
-              {DATAarr.map((value) => {
+              {SEARCH_ARR?.map((value) => {
                 const { imag, name, category, price, id } = value;
-                // description
                 return (
                   <div
                     className="col-xs-12 col-sm-6 col-lg-4 col-xl-3 mb-4"
@@ -98,10 +97,18 @@ const Products = () => {
                           <div className="mask">
                             <div className="d-flex justify-content-start align-items-end h-100">
                               <h5 className="mt-1">
-                                <button className="border-0">
-                                  <Link className="badge bg-primary ms-2 border-0 removeLink" to={`/edit-items/${id}`}>Edit</Link>
+                                <button
+                                  className="badge bg-primary mx-2 border-0 removeLink"
+                                  onClick={() => getEditToClick(id)}
+                                >
+                                  Edit
                                 </button>
-                                <button className="border-0 bg-danger badge" onClick={()=>DeleteProduct(id)}>Delete</button>
+                                <button
+                                  className="border-0 bg-danger badge"
+                                  onClick={() => DeleteProduct(id)}
+                                >
+                                  Delete
+                                </button>
                               </h5>
                             </div>
                           </div>

@@ -2,16 +2,18 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import '../App.css'
+import "../App.css";
+import { getFilterDate, getAllOrder } from "../Redux/action";
+import { useDispatch, useSelector } from "react-redux";
 
 const Orders = () => {
-  const [Items, setItems] = useState([]);
-  const [FilterItems, setFilterItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [startDate, setStartDate] = useState(new Date("2023/03/29")); //03/29/2023
+  const [startDate, setStartDate] = useState(new Date("2023/04/01"));
   const [endDate, setEndDate] = useState(new Date());
   const [toggle, setToggle] = useState(false);
-  const [dropdownname, setDropdownName] = useState("All")
+  const [dropdownname, setDropdownName] = useState("All");
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setLoading(true);
@@ -20,78 +22,80 @@ const Orders = () => {
     }, 1500);
   }, []);
 
-  const baseURL =
-    "https://order-invoice-c8bed-default-rtdb.firebaseio.com/invoice.json/";
-  const GetData = () => {
-    axios.get(baseURL).then((response) => {
-      setItems(response.data);
-      setFilterItems(response.data);
-    });
-  };
+  const getAllUSERorders = useSelector((state)=>state.order.orders)
+  const FILTER_VALUE = useSelector((state)=>state.order.dateFilter)
+  console.log(FILTER_VALUE)
+
+ 
 
   useEffect(() => {
-    GetData();
-  }, [toggle]);
+    if (ALL_USER_AVAILABLE.length === 0) {
+      dispatch(getAllOrder());
+    }
+    dispatch(getFilterDate(ALL_USER_AVAILABLE));
+  }, [getAllUSERorders,toggle]);
 
-  var ITEMSarr = [];
-  for (let key in Items) {
-    ITEMSarr.push(Object.assign(Items[key], { id: key }));
+  var ALL_USER_AVAILABLE = [];
+  for (let key in getAllUSERorders) {
+    ALL_USER_AVAILABLE.push(Object.assign(getAllUSERorders[key], { id: key }));
   }
 
-  var productDateArray = [];
-  for (let key in FilterItems) {
-    productDateArray.push(Object.assign(FilterItems[key], { id: key }));
-  }
 
   const handleSelectDate = () => {
-    let filtered = productDateArray.filter((product) => {
+    let filtered = ALL_USER_AVAILABLE.filter((product) => {
       return (
-        product.Date >= startDate.getDate() + "/" + (startDate.getMonth() + 1) + "/" + startDate.getFullYear() &&
-        product.Date <= endDate.getDate() +  "/" +  (endDate.getMonth() + 1) +  "/" +  endDate.getFullYear()
+          product.Date >=
+            startDate.getDate() +
+            "/" +
+            (startDate.getMonth() + 1) +
+            "/" +
+            startDate.getFullYear() &&
+          product.Date <=
+            endDate.getDate() +
+            "/" +
+            (endDate.getMonth() + 1) +
+            "/" +
+            endDate.getFullYear()
       );
     });
     setStartDate(startDate);
     setEndDate(endDate);
-    setItems(filtered);
+    dispatch(getFilterDate(filtered));
   };
 
   const DeliveryUniq = ["proceed", "In Process", "Dispatch"];
 
   const handleClick = (deliveryInfo) => {
-    console.log(deliveryInfo)
-    if(deliveryInfo){
+    if (deliveryInfo) {
       setDropdownName(deliveryInfo);
-      const result = productDateArray.filter((val) => {
+      const result = ALL_USER_AVAILABLE.filter((val) => {
         return val.deliveryStatus === deliveryInfo;
       });
-      setItems(result);
+      dispatch(getFilterDate(result));
+    } else {
+      dispatch(getFilterDate(ALL_USER_AVAILABLE));
     }
-    else{
-      setItems(productDateArray)
-    }
-  }
+  };
 
   const ChangeDispatchStatus = async (id, deliveryStatus) => {
-    console.log(id, "", deliveryStatus);
     if (deliveryStatus == "proceed") {
-      const updatedOrders = await axios.patch(
+      await axios.patch(
         `https://order-invoice-c8bed-default-rtdb.firebaseio.com/invoice/${id}.json/`,
         {
           deliveryStatus: "In Process",
         }
-      );
+      )
+      .then(()=>dispatch(getAllOrder()))
       setToggle(!toggle);
-      setItems(updatedOrders.data);
     } else if (deliveryStatus == "In Process") {
-      console.log(deliveryStatus);
-      const dispatchOrder = await axios.patch(
+      await axios.patch(
         `https://order-invoice-c8bed-default-rtdb.firebaseio.com/invoice/${id}.json/`,
         {
           deliveryStatus: "Dispatch",
         }
-      );
+        )
+        .then(()=>dispatch(getAllOrder()))
       setToggle(!toggle);
-      setItems(dispatchOrder.data);
     }
   };
 
@@ -99,26 +103,29 @@ const Orders = () => {
     <div className="container-fluid ">
       <div className="row my-2 d-flex align-items-end bg-secondary py-2 container mx-auto">
         <div className="col-md-3">
-        <div className="dropdown d-flex align-items-center justify-content-center">
-          <button className="btn-sm btn-secondary dropdown-toggle col-md-10 border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            {dropdownname.toUpperCase()}
-          </button>
-          <ul className="dropdown-menu">
-          {DeliveryUniq.map((getVal, index) => {
-            
-              return (
-                <button
-                  key={index}
-                  className="dropdown-item"
-                  onClick={() => handleClick(getVal)}>
-                  {getVal.toUpperCase()}
-                </button>
-              );
-             })
-            }
-            
-          </ul>
-        </div>
+          <div className="dropdown d-flex align-items-center justify-content-center">
+            <button
+              className="btn-sm btn-secondary dropdown-toggle col-md-10 border-0"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {dropdownname.toUpperCase()}
+            </button>
+            <ul className="dropdown-menu">
+              {DeliveryUniq.map((getVal, index) => {
+                return (
+                  <button
+                    key={index}
+                    className="dropdown-item"
+                    onClick={() => handleClick(getVal)}
+                  >
+                    {getVal.toUpperCase()}
+                  </button>
+                );
+              })}
+            </ul>
+          </div>
         </div>
         <div className="col-md-3 d-flex justify-content-around align-items-center ">
           <span className="col-md-4">Start date:</span>
@@ -176,8 +183,18 @@ const Orders = () => {
             </tr>
           </thead>
           <tbody>
-            {ITEMSarr.map((values, index) => {
-              const { id, Date, CardOnName, productname, City, State, Address, Total, deliveryStatus} = values;
+            {FILTER_VALUE.map((values, index) => {
+              const {
+                id,
+                Date,
+                CardOnName,
+                productname,
+                City,
+                State,
+                Address,
+                Total,
+                deliveryStatus,
+              } = values;
               return (
                 <tr key={index}>
                   <td>{index + 1}</td>
@@ -195,7 +212,7 @@ const Orders = () => {
                       {deliveryStatus}
                     </button>
                   </td>
-                  <td>{Total}</td>
+                  <td>₹{Total}</td>
                 </tr>
               );
             })}
