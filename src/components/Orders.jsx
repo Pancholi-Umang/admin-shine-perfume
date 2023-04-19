@@ -39,24 +39,13 @@ const Orders = () => {
   for (let key in getAllUSERorders) {
     ALL_USER_AVAILABLE.push(Object.assign(getAllUSERorders[key], { id: key }));
   }
-
+console.log(ALL_USER_AVAILABLE)
 
   const handleSelectDate = () => {
     let filtered = ALL_USER_AVAILABLE.filter((product) => {
       return (
-          product.Date >=
-            startDate.getDate() +
-            "/" +
-            (startDate.getMonth() + 1) +
-            "/" +
-            startDate.getFullYear() &&
-          product.Date <=
-            endDate.getDate() +
-            "/" +
-            (endDate.getMonth() + 1) +
-            "/" +
-            endDate.getFullYear()
-      );
+        product.Date >= startDate.getDate() + "/" + (startDate.getMonth() + 1) + "/" + startDate.getFullYear() &&
+        product.Date <= endDate.getDate() + "/" + (endDate.getMonth() + 1) + "/" + endDate.getFullYear());
     });
     setStartDate(startDate);
     setEndDate(endDate);
@@ -100,7 +89,7 @@ const Orders = () => {
   };
 
   return (
-    <div className="container-fluid ">
+    <div className="container-fluid overflow-scroll">
       <div className="row my-2 d-flex align-items-end bg-secondary py-2 container mx-auto">
         <div className="col-md-3">
           <div className="dropdown d-flex align-items-center justify-content-center">
@@ -184,17 +173,7 @@ const Orders = () => {
           </thead>
           <tbody>
             {FILTER_VALUE.map((values, index) => {
-              const {
-                id,
-                Date,
-                CardOnName,
-                productname,
-                City,
-                State,
-                Address,
-                Total,
-                deliveryStatus,
-              } = values;
+              const { id, Date, CardOnName, productname, City, State, Address, Total, deliveryStatus } = values;
               return (
                 <tr key={index}>
                   <td>{index + 1}</td>

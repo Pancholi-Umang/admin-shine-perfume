@@ -288,6 +288,25 @@ a,
   touch-action: manipulation;
 }
 
+
+.button-custom {
+  background-image: linear-gradient(#e92d0c, #f43535);
+  border: 0;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 5px 15px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: Montserrat, sans-serif;
+  font-size: 0.9em;
+  /* margin: 5px; */
+  padding: 5px 15px;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
 .button-12 {
   display: flex;
   flex-direction: column;
@@ -312,3 +331,4 @@ a,
     0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
   outline: 0;
 }
+

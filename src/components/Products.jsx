@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { getProduct, searchProduct, fetchSingleRecord, deleteRecord } from "../Redux/action";
 import { useDispatch, useSelector } from "react-redux";
@@ -57,7 +56,7 @@ const Products = () => {
     dispatch(fetchSingleRecord(id));
     navigate(`/edit-items/${id}`);
   };
-
+console.log(ITEMSarr)
   return (
     <div className="container-fluid">
       <div className="col-md-10 container px-1 mt-2">

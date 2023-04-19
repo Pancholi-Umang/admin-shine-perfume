@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllRegistration } from "../Redux/action";
+import axios from "axios";
 
 export default function AllUserData() {
 
@@ -20,6 +21,11 @@ export default function AllUserData() {
     }
   }
 
+  const onClickToDelete = (id) => {
+    axios.delete(`https://registration-login-23503-default-rtdb.firebaseio.com/login/${id}.json`)
+    .then(()=>dispatch(getAllRegistration()))
+  }
+
   return (
     <div className="container">
       <h4 className="my-3">All Registerd User's Details:-</h4>
@@ -33,6 +39,7 @@ export default function AllUserData() {
               <th scope="col">Last Name</th>
               <th scope="col">Email</th>
               <th scope="col">Password</th>
+              <th scope="col text-center">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -44,6 +51,7 @@ export default function AllUserData() {
                   <td>{val?.lastName}</td>
                   <td>{val?.email}</td>
                   <td>{val?.password}</td>
+                  <td><button className="btn button-custom" onClick={()=>onClickToDelete(val.id)}>DELETE</button></td>
                 </tr>
               );
             })}

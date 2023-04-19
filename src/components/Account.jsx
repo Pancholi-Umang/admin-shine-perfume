@@ -1,6 +1,7 @@
 import React from "react";
 
-const Account = () => {
+function Account() {
+
   return (
     <div className="container-fluid">
       <section>
@@ -33,8 +34,7 @@ const Account = () => {
                   <img
                     src="https://i.pinimg.com/736x/f7/e2/a9/f7e2a99119c1999a16ae83c4fca1865d.jpg"
                     alt="avatar"
-                    className="rounded-circle img-fluid"
-                  />
+                    className="rounded-circle img-fluid" />
                   <h5 className="my-3">Shine Perfume</h5>
                   <div className="d-flex justify-content-center mb-2"></div>
                 </div>
@@ -129,6 +129,6 @@ const Account = () => {
       </section>
     </div>
   );
-};
+}
 
 export default Account;
